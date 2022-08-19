@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Alert, Box, Button, Grid, Snackbar, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 
 const RegisterForm = () => {
@@ -14,24 +14,24 @@ const RegisterForm = () => {
     const [department, setDepartment] = useState("");
   
     const handleRegister = async (e) => {
-        e.preventDefault();
-        await axios({
-          method: "post",
-          url: `http://localhost:3050/api/user/register`,
-          data: {
-            nom,
-            prenom,
-            dateNaissance,
-            department,
-            email,
-            password
-          }
+      e.preventDefault();
+      await axios({
+        method: "post",
+        url: `http://localhost:3050/api/user/register`,
+        data: {
+          nom,
+          prenom,
+          dateNaissance,
+          department,
+          email,
+          password
+        }
+      })
+        .then((res) => {
+            setFormSubmit(true);
+            toast.success("Utilisateur a été bien crée");
         })
-          .then((res) => {
-              setFormSubmit(true);
-              toast.success("Utilisateur a été bien crée");
-          })
-          .catch((err) => toast.error(err.response.data))
+        .catch((err) => toast.error(err.response.data))
     }
 
     return (
@@ -66,8 +66,8 @@ const RegisterForm = () => {
               <Button variant="contained" style={{ height: "50px", fontSize: 20}} fullWidth type="submit">Créer compte</Button>
             </Grid>
           </Grid>
-          <ToastContainer/>
         </form>
+        <ToastContainer/>
       </>
     )
 }

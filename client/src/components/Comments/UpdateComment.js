@@ -6,22 +6,20 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { updateComment } from "../actions/postActions";
+import { updateComment } from "../../actions/postActions";
 
 const UpdateComment = ({comment, post}) => {
-    const dispatch = useDispatch();
-    const [open, setOpen] = useState(false);
-    const [newCommentContent, setNewCommentContent] = useState("");
-    const [update, setUpdate] = useState(false);
-
-    
-    const updateComments = (e) => {
-      e.preventDefault();
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [newCommentContent, setNewCommentContent] = useState("");
+  
+  const updateComments = (e) => {
+    e.preventDefault();
+    if(newCommentContent) {
       dispatch(updateComment(post._id, comment._id, newCommentContent));
       setNewCommentContent('');
-      setUpdate(false);
     }
-
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,6 +40,8 @@ const UpdateComment = ({comment, post}) => {
           <TextField
             autoFocus
             onChange={(e) => setNewCommentContent(e.target.value)}
+            name="newCommentContent"
+            type="text"
           />
         </DialogContent>
         <DialogActions>

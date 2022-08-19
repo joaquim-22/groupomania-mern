@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext} from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { likePost, unlikePost } from "../actions/postActions";
+import { useSelector, useDispatch } from "react-redux";
+import { likePost, unlikePost } from "../../actions/postActions";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Avatar, Grid, List, ListItem } from "@mui/material";
-import { UidContext } from "./AppContext";
+import { UidContext } from "../AppContext";
 
 const style = {
     position: 'absolute',
@@ -65,7 +64,7 @@ const LikeButton = ({ post }) => {
                         <List>
                             {
                                 users.length > 0 && users.map((user) =>  {
-                                    if (user.likes.includes(post._id)) {
+                                    if (post.likers.includes(user._id)) {
                                         return(
                                             <ListItem key={user._id}>
                                                 <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user" key={user._id}/>

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react'
-import logoGroupomania from '../assets/logo.svg'
+import logoGroupomania from '../../assets/logo.svg'
 
 const Logo = () => {
     return (

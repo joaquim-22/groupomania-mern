@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPosts } from '../actions/postActions';
 import axios from 'axios';
-import NavBar from '../components/NavBar';
-import PostCard from '../components/PostCard';
+import { useDispatch, useSelector } from 'react-redux';
+import {toast, ToastContainer} from 'react-toastify';
+import { getPosts } from '../actions/postActions';
+import NavBar from '../components/NavBar/NavBar';
+import PostCard from '../components/Posts/PostCard';
 import SendIcon from '@mui/icons-material/Send';
 import { Avatar, Button, Card, Container, CssBaseline, Grid, Input, List, TextField, Typography } from '@mui/material';
-import {toast} from 'react-toastify';
 
 
 const Feed = () => {
@@ -70,6 +70,7 @@ const Feed = () => {
                         return <PostCard key={post._id} post={post} user={user}/>;
                     })}
                 </List>
+                <ToastContainer/>
             </Container>
         </div>
     )

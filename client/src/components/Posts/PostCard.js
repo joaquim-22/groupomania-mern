@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import CommentsCard from '../components/CommentsCard';
+import { toast, ToastContainer } from 'react-toastify';
+import CommentsCard from '../Comments/CommentsCard';
 import LikeButton from './LikeButton';
-import { addComment, deletePost, getPosts } from "../actions/postActions";
-import ClearIcon from '@mui/icons-material/Clear';
 import UpdatePost from './UpdatePost'
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import { Box, TextField, CardContent, Grid, List, Modal, Button } from '@mui/material';
+import { addComment, deletePost, getPosts } from "../../actions/postActions";
+import { Box, TextField, CardContent, Grid, List, Modal, Button, Card, CardHeader, CardMedia, Avatar, IconButton, Typography, ListItem } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import SendIcon from '@mui/icons-material/Send';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
-import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 const PostCard = ({ post, user }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const users = useSelector((state) => state.usersReducer);
     const [commentContent, setCommentContent] = useState("");
     const [open, setOpen] = useState(false);
@@ -50,8 +45,12 @@ const PostCard = ({ post, user }) => {
             dispatch(addComment(post._id, commentContent))
             .then(() => dispatch(getPosts()))
             .then(() => setCommentContent(''))
-            .catch((err) => console.log(err))
-        }
+            .catch((err) => toast.error(err.response.data))
+    }
+
+    const searchUser = (e, id) => {
+        navigate(`/profile/${id}`);
+    }
 
     return (
         <ListItem >
@@ -59,7 +58,10 @@ const PostCard = ({ post, user }) => {
                 <CardHeader
                     avatar={users.length > 0 &&
                             users.map((user) => {
-                                return (user.picture !== undefined && user._id === post.posterId) ? <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user" key={user._id}/>
+                                return (user.picture !== undefined && user._id === post.posterId) ?
+                                (<IconButton key={user._id} onClick={(e) => searchUser(e, user._id)}>
+                                    <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user"/>
+                                </IconButton>)
                                 : null
                         })}
                     action={

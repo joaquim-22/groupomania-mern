@@ -10,20 +10,19 @@ const ProfileUpdate = ({user}) => {
   const [department, setDepartment] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
   const [image, setImage] = useState({ preview: '', data: '' });
-  const [status, setStatus] = useState('');
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    const userId = user._id;
-    console.log(user);
-    axios(`http://localhost:3050/api/user/${userId}`, {
+  const handleUpdate = async (e) => {
+    e.preventDefault()
+    const userId = user._id
+    
+    await axios(`http://localhost:3050/api/user/${userId}`, {
       method: "PUT",
       data: { nom, prenom, department, bio, user },
       withCredentials: true
     })
     .then((res) => {
       setUpdateForm(false);
-      toast.success(res.data.success);
+      toast.success("Profil updated");
     })
     .catch((res) => console.log(res));
   }
@@ -43,10 +42,11 @@ const ProfileUpdate = ({user}) => {
     .catch((err) => toast.error(err.response.data))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     let formData = new FormData()
     formData.append('file', image.data)
-    const response = axios.put('http://localhost:3050/api/user/upload', formData, {
+    const response = axios.patch('http://localhost:3050/api/user/upload', formData, {
       headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true
     })
@@ -65,7 +65,7 @@ const ProfileUpdate = ({user}) => {
     <>
       <form className="avatar-update" onSubmit={handleSubmit}>
         <Grid container justifyContent={'space-around'}>
-          {(image && image.preview) && <img src={image.preview} alt="Avatar Preview" width='100' height='100' />}
+          {(image && image.preview) && <Avatar src={image.preview} alt="Avatar Preview" sx={{ width: 100, height: 100 }}/>}
           {(user && user.picture !== undefined) && <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user" sx={{ width: 100, height: 100 }}/> }
           <Input type='file' name='file' onChange={handleFileChange}></Input>
           <Button fullWidth variant='outlined' type='submit'>Submit</Button>

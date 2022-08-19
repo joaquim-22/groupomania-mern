@@ -1,27 +1,21 @@
 import React, {useState} from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import { TextField, Dialog, DialogActions, DialogContent, DialogTitle, Input, Button } from '@mui/material/';
 import { useDispatch } from 'react-redux';
-import { updatePost } from "../actions/postActions";
+import { updatePost, getPosts } from "../../actions/postActions";
 import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
-import { Input } from '@mui/material';
 
-const UpdatePost = ({post}) => {
+const UpdatePost = ({ post }) => {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [newContent, setNewContent] = useState("");
     const [image, setImage] = useState("");
 
-  const updateQuote = () => {
+  const updateQuote = async () => {
     const formData = new FormData();
     formData.append("file", image);
     formData.append("newContent", newContent);
-    dispatch(updatePost(post._id, formData))
+    await dispatch(updatePost(post._id, formData))
+    dispatch(getPosts());
   } 
   
   const handleClickOpen = () => {

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { getUser } from './actions/userActions'
 import { useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [uid, setUid] = useState(null)

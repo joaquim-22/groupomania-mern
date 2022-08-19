@@ -11,20 +11,20 @@ export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 
 export const getPosts = () => {
-  return (dispatch) => {
-      axios(`http://localhost:3050/api/post/`,{
+  return async (dispatch) => {
+      return axios(`http://localhost:3050/api/post/`,{
         method: "GET",
       })
       .then((res) => {
         dispatch({ type: GET_POSTS, payload: res.data });
       })
-      .catch((err) => console.log(err + 'error'));
+      .catch((err) => console.log(err));
   }
 };
 
 export const updatePost = (postId, formData) => {
-  return (dispatch) => {
-    axios(`http://localhost:3050/api/post/${postId}`, {
+  return async (dispatch) => {
+    return axios(`http://localhost:3050/api/post/${postId}`, {
       method: "PUT",
       data: formData,
       withCredentials: true
@@ -43,8 +43,8 @@ export const updatePost = (postId, formData) => {
 }
 
 export const deletePost = (postId) => {
-  return (dispatch) => {
-    axios(`http://localhost:3050/api/post/${postId}`, {
+  return async (dispatch) => {
+    return axios(`http://localhost:3050/api/post/${postId}`, {
       method: "DELETE",
       withCredentials: true
     })
@@ -62,7 +62,7 @@ export const deletePost = (postId) => {
 }
 
 export const likePost = (postId, userId) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     return axios(`http://localhost:3050/api/post/like-post/` + postId, {
       method: "PATCH",
       withCredentials: true
@@ -75,7 +75,7 @@ export const likePost = (postId, userId) => {
 };
 
 export const unlikePost = (postId, userId) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     return axios(`http://localhost:3050/api/post/unlike-post/` + postId, {
       method: "PATCH",
       withCredentials: true
@@ -88,7 +88,7 @@ export const unlikePost = (postId, userId) => {
 };
 
 export const addComment = (postId, commentContent, userId) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     return axios({
       method: "PATCH",
       url: `http://localhost:3050/api/post/comment-post/${postId}`,
@@ -102,7 +102,7 @@ export const addComment = (postId, commentContent, userId) => {
         }
         else toast.error("Error")
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err.response.data));
   };
 };
 
@@ -127,16 +127,16 @@ export const updateComment = (postId, commentId, newCommentContent) => {
 }
 
 export const deleteComment = (postId, commentId) => {
-  return (dispatch) => {
-    axios(`http://localhost:3050/api/post/delete/comment/${postId}`, {
+  return async (dispatch) => {
+    return axios(`http://localhost:3050/api/post/delete/comment/${postId}`, {
       method: "PATCH",
       data: { commentId },
       withCredentials: true
     })
     .then((res) => {
       if(res.status === 200) {
-        dispatch({ type: DELETE_COMMENT, payload: { commentId }})
-        toast.success("Commentaire suprimé");
+        dispatch({ type: DELETE_COMMENT, payload: { postId, commentId }})
+        toast.success("Commentaire supprimmé");
       }
       else {
         toast.error("Error");

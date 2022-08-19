@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import NavBar from '../components/NavBar';
-import ProfileUpdate from '../components/ProfileUpdate';
-import UserProfile from '../components/UserProfile';
+import NavBar from '../components/NavBar/NavBar';
+import ProfileUpdate from '../components/Profile/ProfileUpdate';
+import UserProfile from '../components/Profile/UserProfile';
 import { CssBaseline, Container, Box, Button, Grid } from '@mui/material';
 
 const Profile = ({ user }) => {

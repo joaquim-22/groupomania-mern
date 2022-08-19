@@ -47,7 +47,7 @@ const adminBro = new AdminBro({
     branding: {
         companyName: 'Groupomania',
     }
-})
+});
 
 const router = AdminBroExpressjs.buildRouter(adminBro);
 app.use(adminBro.options.roothPath, router)

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import NavBar from './NavBar';
-import { CssBaseline, Container, Box, Button, Grid, CardContent, CardHeader, Card, Typography, Avatar, List } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import NavBar from '../NavBar/NavBar';
+import { CssBaseline, Container, Box, CardContent, CardHeader, Card, Typography, Avatar, List } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts } from '../actions/postActions';
-import PostCard from './PostCard';
+import { getPosts } from '../../actions/postActions';
+import PostCard from '../Posts/PostCard';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -20,7 +20,7 @@ const ProfileUsers = () => {
             .then((res) => {
             setUserGet(res.data)
             })
-            .catch((err) => window.location='/feed')
+            .catch((err) => console.log(err))
     }, [params.id,]);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const ProfileUsers = () => {
             <Card sx={{ width: 1 }}>
                 <CardHeader 
                     avatar={(
-                        userGet.picture !== undefined) && <Avatar src={"http://localhost:3050/Images/" + userGet.picture} alt="user" key={userGet.id} sx={{ width: 100, height: 100 }}/>
+                        userGet.picture !== undefined) && <Avatar src={"http://localhost:3050/Images/" + userGet.picture} alt="user" key={userGet._id} sx={{ width: 100, height: 100 }}/>
                     }
                     title={userGet.prenom + ' ' + userGet.nom}
                 />
@@ -55,8 +55,8 @@ const ProfileUsers = () => {
             </Card>
             <List>
                 {
-                posts.length > 0 && posts.slice().reverse().map((post) => {
-                    if(userGet.id === post.userId) return <PostCard post={post} user={user} key={post.id} />
+                posts.length > 0 && posts.map((post) => {
+                    if(userGet._id === post.posterId) return <PostCard post={post} user={user} key={post._id} />
                     else return null
                 })}
             </List>

@@ -7,13 +7,14 @@ export default function postReducer(state = initialState, action) {
         case GET_POSTS:
             return action.payload;
         case DELETE_POST:
-            return state.filter((post) => post.id !== action.payload.postId);
+            return state.filter((post) => post._id !== action.payload.postId);
         case UPDATE_POST:
             return state.map((post) => {
-                if (post.id === action.payload.postId) {
+                if (post._id === action.payload.postId) {
+                  const {newContent} = action.payload.formData;
                     return {
                             ...post,
-                            content: action.payload.content,
+                            message: newContent,
                         };
                 } else return post;
         });
@@ -46,7 +47,7 @@ export default function postReducer(state = initialState, action) {
                     if (comment._id === action.payload.commentId) {
                       return {
                         ...comment,
-                        text: action.payload.text,
+                        text: action.payload.newCommentContent,
                       };
                     } else {
                       return comment;

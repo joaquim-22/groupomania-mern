@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import RegisterForm from "./RegisterForm";
-import LoginForm from "./LoginForm";
+import RegisterForm from "./Auth/RegisterForm";
+import LoginForm from "./Auth/LoginForm";
 import { Box, Button, Grid } from "@mui/material";
 
 const MenuHome = ( props ) => {

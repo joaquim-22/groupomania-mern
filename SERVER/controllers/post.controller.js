@@ -130,9 +130,12 @@ module.exports.unlikePost = async (req, res) => {
 module.exports.commentPost = (req, res) => {
     const token = req.cookies.jwt;
     const userId = getUserId(token);
+    const commentContent = req.body.commentContent;
 
     if (!ObjectID.isValid(req.params.id))
       return res.status(400).send("ID unknown : " + req.params.id);
+
+      if(!commentContent) return res.status(400).json('Commentaire vide');
 
         PostModel.findByIdAndUpdate(
             req.params.id,
@@ -140,7 +143,7 @@ module.exports.commentPost = (req, res) => {
                 $push: {
                     comments: {
                         commenterId: userId,
-                        text: req.body.commentContent,
+                        text: commentContent,
                         timestamp: new Date().getTime(),
                     },
                 },

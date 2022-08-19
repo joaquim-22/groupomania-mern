@@ -2,7 +2,7 @@ const UserModel = require('../models/users.model');
 const jwt = require('jsonwebtoken'); 
 const JWT_SIGN_SECRET = '<JWT_SIGN_TOKEN>';
 const EMAIL_REGEX = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-const PASSWORD_REGEX = /^(?=.*\d).{6,10}$/;
+const PASSWORD_REGEX = /^(?=.*\d).{6,50}$/;
 const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 const maxAge = 3 * 24 * 60 * 60 * 1000
 
@@ -31,7 +31,7 @@ module.exports.signUp = async (req, res) => {
   }
 
   if(!PASSWORD_REGEX.test(password)) {
-      return res.status(400).json("Password n'est pas valid")
+      return res.status(400).json("Password doit contenir 6 caractères minimum et un chiffre")
   }
 
   if(!DATE_REGEX.test(dateNaissance)) {

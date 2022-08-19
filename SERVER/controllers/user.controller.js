@@ -5,8 +5,6 @@ const { getUserId } = require('../middleware/auth.middleware');
 
 module.exports.getAllUsers = async (req, res) => {
   const users = await UserModel.find().select('-password');
-  res.setHeader('Access-Control-Expose-Headers', 'Content-Range');
-  res.setHeader('Content-Range', 5);
   res.status(200).json(users);
 }
 

@@ -41,7 +41,7 @@ const SearchBar = () => {
                     })
                     .map((val) => {
                         return (
-                            <ListItem onClick={(e) => searchUser(e, val.id)} key={val.id} ><Typography>{val.nom + ' ' + val.prenom}</Typography></ListItem>
+                            <ListItem onClick={(e) => searchUser(e, val._id)} key={val._id} ><Typography>{val.nom + ' ' + val.prenom}</Typography></ListItem>
                         )
                     })
                 }    

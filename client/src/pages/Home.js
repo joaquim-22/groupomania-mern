@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../components/Logo";
+import Logo from "../components/NavBar/Logo";
 import HomeImage from "../assets/groupomaniaHomeImage.svg";
 import MenuHome from "../components/MenuHome";
 import { Box, Container, Typography, CssBaseline } from "@mui/material";

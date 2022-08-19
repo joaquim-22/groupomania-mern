@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getPosts } from '../actions/postActions';
-import PostCard from '../components/PostCard';
+import { getPosts } from '../../actions/postActions';
+import PostCard from '../Posts/PostCard';
 import { useDispatch, useSelector } from "react-redux";
 import { CssBaseline, Box, Avatar, CardHeader, Card, CardContent, Typography, List } from '@mui/material';
 
@@ -38,8 +38,8 @@ const UserProfile = ({user}) => {
             </Card>
             <List>
                 {
-                posts.length > 0 && posts.slice().reverse().map((post) => {
-                    if(user && user.id === post.userId) return <PostCard post={post} user={user} key={post._id} />
+                posts.length > 0 && posts.map((post) => {
+                    if(user && user._id === post.posterId) return <PostCard post={post} user={user} key={post._id} />
                     else return null
                 })}
             </List>
