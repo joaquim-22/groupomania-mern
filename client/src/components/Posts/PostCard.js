@@ -40,11 +40,13 @@ const PostCard = ({ post, user }) => {
         return converted.toLocaleString();
     };
 
-    const handleComment = (e) => {
+    const handleComment = async (e) => {
         e.preventDefault();
-            dispatch(addComment(post._id, commentContent))
-            .then(() => dispatch(getPosts()))
-            .then(() => setCommentContent(''))
+            await dispatch(addComment(post._id, commentContent))
+            .then(() => {
+                dispatch(getPosts())
+                setCommentContent('')
+            })
             .catch((err) => toast.error(err.response.data))
     }
 
@@ -118,15 +120,17 @@ const PostCard = ({ post, user }) => {
                         </List>
                         <TextField
                             onChange={(e) => setCommentContent(e.target.value)}
+                            value={commentContent} name="commentContent"
                             fullWidth variant="filled" label="Ajoutez un commentaire ..."/>
-                        <Button style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handleComment}>Submit</Button>
+                        <Button type="submit" style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handleComment}>Submit</Button>
                     </Box>
                 </Modal>
                     <Grid container>
                         <TextField
                             onChange={(e) => setCommentContent(e.target.value)}
+                            value={commentContent} name="commentContent"
                             fullWidth variant="filled" label="Ajoutez un commentaire ..."/>
-                        <Button style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handleComment}>Submit</Button> 
+                        <Button type="submit" style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handleComment}>Submit</Button> 
                     </Grid>
             </Card>
             <ToastContainer/>

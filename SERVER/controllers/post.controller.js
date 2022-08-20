@@ -16,7 +16,7 @@ module.exports.createPost = async (req, res) => {
     const message = req.body.content;
     const userId = req.body.posterId;
 
-   if(!message && !picture) return res.status(400).json({error: 'Publication vide'})
+   if(!message && !picture) return res.status(400).json('Publication vide')
 
     const newPost = new postModel({
         posterId: userId,

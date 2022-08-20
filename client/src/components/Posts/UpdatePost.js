@@ -16,6 +16,8 @@ const UpdatePost = ({ post }) => {
     formData.append("newContent", newContent);
     await dispatch(updatePost(post._id, formData))
     dispatch(getPosts());
+    setNewContent('');
+    setImage('');
   } 
   
   const handleClickOpen = () => {
@@ -34,11 +36,8 @@ const UpdatePost = ({ post }) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update publication</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            onChange={(e) => setNewContent(e.target.value)}
-          />
-        <Input sx={{m: 2}} type="file" onChange={(e) => setImage(e.target.files[0])} name='image'></Input>
+          <TextField fullWidth autoFocus onChange={(e) => setNewContent(e.target.value)} value={newContent}/>
+          <Input sx={{m: 2}} type="file" onChange={(e) => setImage(e.target.files[0])} name='image'/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

@@ -119,7 +119,7 @@ const NavBar = () => {
             {
             user.isAdmin === true &&
               <MenuItem>
-                <Link underline="none" href="/admin/*">Admin</Link>
+                <Link underline="none" href="http://localhost:3050/admin">Admin</Link>
               </MenuItem>
             }
             <MenuItem>

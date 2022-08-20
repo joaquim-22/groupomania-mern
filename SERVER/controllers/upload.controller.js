@@ -4,8 +4,8 @@ const { getUserId } = require('../middleware/auth.middleware');
 module.exports.uploadProfil = async (req, res) => {
     const token = req.cookies.jwt;
     const userId = getUserId(token);
-    const picture = req.file.filename;
-
+    let picture = req.file.filename;
+     
     try {
         await UserModel.findByIdAndUpdate(
           userId,

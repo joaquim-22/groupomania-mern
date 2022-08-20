@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile'
 import Feed from './pages/Feed';
@@ -17,7 +17,7 @@ const RoutesPages = () => {
         'sans-serif'
       ].join(',')
     }
-  })
+  });
 
   const user = useSelector((state) => state.userReducer);
 
@@ -28,6 +28,7 @@ const RoutesPages = () => {
           <Route path='/feed' element={<Feed/>} />
           <Route path='/profile' element={<Profile user={user}/>}/>
           <Route path='/profile/:id' element={<ProfileUsers/>}/>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </ThemeProvider>
     );

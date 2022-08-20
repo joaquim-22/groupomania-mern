@@ -37,9 +37,10 @@ const Feed = () => {
         })
         .then((res) => {
             dispatch(getPosts());
+            setContent('');
             toast.success('Post ajouté');
         })
-        .catch((res) => toast.error('Error'))
+        .catch((err) => toast.error(err.response.data))
     }
 
     return (
@@ -58,8 +59,8 @@ const Feed = () => {
 
                 <Card>
                     <Grid container justifyContent="center">
-                        <TextField variant='filled' fullWidth type="text" onChange={(e) => setContent(e.target.value)} name='content' placeholder='Ecrivez'/>
-                        <Input sx={{m: 2}} type="file" onChange={(e) => setImage(e.target.files[0])} name='image'></Input>
+                        <TextField variant='filled' value={content} fullWidth type="text" onChange={(e) => setContent(e.target.value)} name='content' placeholder='Ecrivez'/>
+                        <Input sx={{m: 2}} type="file" onChange={(e) => setImage(e.target.files[0])} name='image'/>
                         <Button type="submit" style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handlePost}>Publier</Button> 
                     </Grid>
                 </Card>

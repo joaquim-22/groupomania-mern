@@ -6,8 +6,8 @@ const PASSWORD_REGEX = /^(?=.*\d).{6,50}$/;
 const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 const maxAge = 3 * 24 * 60 * 60 * 1000
 
-const createToken = (id) => {
-  return jwt.sign({id}, JWT_SIGN_SECRET, {
+const createToken = (id, admin) => {
+  return jwt.sign({id, admin}, JWT_SIGN_SECRET, {
     expiresIn: maxAge
   })
 }
@@ -56,7 +56,7 @@ module.exports.signIn = async (req, res) => {
 
   try {
     const user = await UserModel.login(email, password);
-    const token = createToken(user._id);
+    const token = createToken(user._id, user.isAdmin);
     res.cookie('jwt', token, { maxAge });
     res.status(200).json({ user: user._id})
   } catch (err) {
