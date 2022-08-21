@@ -25,42 +25,52 @@ const CommentsCard = ({ comment, post }) => {
     }
 
     return (
-            <Card>
-                <CardHeader
-                        avatar={users.length > 0 &&
-                                users.map((user) => {
-                                    return (user.picture !== undefined && user._id === comment.commenterId) ?
-                                    (   <IconButton key={user._id} onClick={(e) => searchUser(e, user._id)}>
-                                            <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user"/>
-                                        </IconButton>)
-                                    : null
-                            })}
-                        action={
-                            <Grid container>
-                                {(user._id === comment.commenterId) ? 
-                                    <UpdateComment comment={comment} post={post}/>
-                                : null}
-
-                                {( user._id === comment.commenterId ) ? 
-                                    <IconButton onClick={deleteComments}>
-                                        <ClearIcon sx={{ color: 'red' }}/>
-                                    </IconButton>
-                                : null}
-                            </Grid>
+        <Card style={{'margin-bottom': '10px'}}>
+            <Grid container justifyContent={'center'} pt={2}>
+                <Grid item container xs={12} sm={5} justifyContent={{xs: 'center', sm:'flex-start'}}>
+                    <Grid item>
+                        {
+                            users.length > 0 && users.map((user) => {
+                                return (user.picture !== undefined && user._id === comment.commenterId) ?
+                                    (<IconButton key={user._id} onClick={(e) => searchUser(e, user._id)}>
+                                        <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user"/>
+                                    </IconButton>)  : null
+                            })
                         }
-                        title={users.length > 0 &&
-                                users.map((user) => {
-                                    if (user._id === comment.commenterId) return user.prenom + ' ' + user.nom
-                                    else return null;
-                                })
-                                .join("")
-                            }
-                        subheader={convertDateForHuman(comment.timestamp).slice(0, -3)}
-                    />
-                    <CardContent>
-                        <Typography>{comment.text}</Typography>
-                    </CardContent>
-            </Card>
+                    </Grid>
+                    <Grid item>
+                        {
+                            users.length > 0 && users.map((user) => {
+                                if (user._id === comment.commenterId) return user.prenom + ' ' + user.nom
+                                else return null;
+                            }).join("")
+                        }
+                        <Typography>{convertDateForHuman(comment.timestamp).slice(0, -3)}</Typography>
+                    </Grid>
+                </Grid>
+                <Grid item container xs={12} sm={6} justifyContent={{xs: 'center', sm:'flex-end'}}>
+                    <Grid item alignSelf='center'>
+                        {
+                            (user._id === comment.commenterId) ? 
+                                <UpdateComment comment={comment} post={post}/>
+                            : null
+                        }
+                    </Grid>
+                    <Grid item>
+                        {
+                            (user._id === comment.commenterId ) ? 
+                                <IconButton onClick={deleteComments}>
+                                    <ClearIcon sx={{ color: 'red' , fontSize: 45}}/>
+                                </IconButton>
+                            : null
+                        }
+                    </Grid>
+                </Grid>
+            </Grid>
+            <CardContent>
+                <Typography>{comment.text}</Typography>
+            </CardContent>
+        </Card>
     )
 }
 

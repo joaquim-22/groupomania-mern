@@ -5,8 +5,8 @@ import UserProfile from '../components/Profile/UserProfile';
 import { CssBaseline, Container, Box, Button, Grid } from '@mui/material';
 
 const Profile = ({ user }) => {
-    const [update, setUpdate] = useState(true);
-    const [monProfil, setMonProfil] = useState(false);
+    const [update, setUpdate] = useState(false);
+    const [monProfil, setMonProfil] = useState(true);
   
     const handleModals = (e) => {
       if (e.target.id === "update") {
@@ -19,22 +19,20 @@ const Profile = ({ user }) => {
     };
 
     return (
-        <div style={{backgroundColor: "#E3E3E3"}}>
+        <div>
             <CssBaseline/>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" height="100vh">
                 <NavBar user={user}/>
-                <Box>
-                    <Grid container justifyContent={'space-evenly'} mb={3}>
-                        <Grid item xs={5}>
-                            <Button fullWidth variant="outlined" onClick={handleModals} id="update">Update</Button>
-                        </Grid>
-                        <Grid item xs={5}>
-                            <Button fullWidth variant="outlined" onClick={handleModals} id="monProfil">Mon Profil</Button>
-                        </Grid>
+                <Grid container justifyContent={'space-evenly'} my={3}>
+                    <Grid item xs={5}>
+                        <Button fullWidth variant="contained" color='secondary' onClick={handleModals} id="update">Update</Button>
                     </Grid>
-                    {update && <ProfileUpdate user={user}/>}
-                    {monProfil && <UserProfile user={user}/>}
-                </Box>
+                    <Grid item xs={5}>
+                        <Button fullWidth variant="contained" color='secondary' onClick={handleModals} id="monProfil">Mon Profil</Button>
+                    </Grid>
+                </Grid>
+                {update && <ProfileUpdate user={user}/>}
+                {monProfil && <UserProfile user={user}/>}
             </Container>
         </div>
     )

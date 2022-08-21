@@ -24,6 +24,8 @@ module.exports.updateUser = async (req, res) => {
   const {nom, prenom, bio, department} = req.body;
   const userPrev = req.body.user;
 
+  if(bio === "" && nom === "" && prenom === "" && department === "") return res.status(400).json('Aucune champs a été rempli')
+
   try {
     await UserModel.findByIdAndUpdate(
       { _id: userId },
@@ -37,10 +39,10 @@ module.exports.updateUser = async (req, res) => {
       },
       { upsert: true })
       .then((data) => res.send(data))
-      .catch((err) => res.status(500).send({ message: err }));
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: err });
+      .catch((err) => res.status(400).json(err));
+  } 
+  catch (err) {
+    return res.status(500).json(err);
   }
 }
 

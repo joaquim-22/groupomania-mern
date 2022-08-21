@@ -16,8 +16,16 @@ const RoutesPages = () => {
         'Lato',
         'sans-serif'
       ].join(',')
-    }
-  });
+    },
+    palette: {
+      primary: {
+        main: '#FD2D01',
+      },
+      secondary: {
+        main: '#4E5166',
+      },
+    },
+});
 
   const user = useSelector((state) => state.userReducer);
 

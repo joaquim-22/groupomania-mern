@@ -6,20 +6,21 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { updateComment } from "../../actions/postActions";
+import { getPosts, updateComment } from "../../actions/postActions";
 
 const UpdateComment = ({comment, post}) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [newCommentContent, setNewCommentContent] = useState("");
   
-  const updateComments = (e) => {
+  const updateComments = async (e) => {
     e.preventDefault();
     if(newCommentContent) {
-      dispatch(updateComment(post._id, comment._id, newCommentContent));
+      await dispatch(updateComment(post._id, comment._id, newCommentContent));
+      dispatch(getPosts())
       setNewCommentContent('');
     }
-  }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,9 +32,7 @@ const UpdateComment = ({comment, post}) => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Update
-      </Button>
+      <Button variant="outlined" onClick={handleClickOpen}>Update</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update Commentaire</DialogTitle>
         <DialogContent>
@@ -42,6 +41,7 @@ const UpdateComment = ({comment, post}) => {
             onChange={(e) => setNewCommentContent(e.target.value)}
             name="newCommentContent"
             type="text"
+            value={newCommentContent}
           />
         </DialogContent>
         <DialogActions>

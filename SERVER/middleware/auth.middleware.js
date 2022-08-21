@@ -10,7 +10,6 @@ module.exports.checkUser = (req, res, next) => {
                 res.locals.user = null;
                 next();
             } else {
-              console.log(decodedToken);
               let user = await UserModel.findById(decodedToken.id);
               res.locals.user = user;
               next();
@@ -53,4 +52,19 @@ module.exports.getUserId = (token) => {
       }
   }   
   return userId;
+};
+
+module.exports.requireAdmin = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, JWT_SIGN_SECRET, async (err, decodedToken) => {
+      if (!err && decodedToken.isAdmin === true) {
+        next()
+      } else {        
+        res.status(400).json('No access')
+      }
+    });
+  } else {
+        res.status(400).json('No access')
+  }
 };

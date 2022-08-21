@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema(
       maxLength: 55,
       trim: true
     },
+    dateNaissance: {
+      type: String,
+      required: true
+    },
     picture: {
       type: String,
       default: "random-user.png"
@@ -46,7 +50,11 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     likes: {
-      type: [String]
+      type: [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'post'
+    }]
     }
   },
   {
@@ -68,9 +76,9 @@ userSchema.statics.login = async function(email, password) {
     if (auth) {
       return user;
     }
-    throw Error('incorrect password');
+    throw Error('Incorrect password');
   }
-  throw Error('incorrect email')
+  throw Error('Incorrect email')
 };
 
 const UserModel = mongoose.model("user", userSchema);

@@ -17,7 +17,6 @@ const Feed = () => {
     const [content, setContent] = useState("");
     const [image, setImage] = useState("");
     
-
     useEffect(() => {
         dispatch(getPosts());
     },[dispatch])
@@ -44,7 +43,7 @@ const Feed = () => {
     }
 
     return (
-        <div style={{backgroundColor: "#E3E3E3"}}>
+        <div style={{ height: "100%"}}>
             <CssBaseline/>
             <Container maxWidth="lg">
                 <NavBar/>

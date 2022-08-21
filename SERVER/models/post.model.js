@@ -3,8 +3,8 @@ const mongoose= require('mongoose');
 const PostSchema = new mongoose.Schema(
     {
         posterId: {
-            type: String,
-            required: true
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
         },
         message: {
             type: String,
@@ -15,13 +15,19 @@ const PostSchema = new mongoose.Schema(
             type: String,
         },
         likers: {
-            type: [String],
+            type: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            }],
             required: true,
         },
         comments: {
             type: [
                 {
-                    commenterId: String,
+                    commenterId: {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: 'user'
+                    },
                     text: String,
                     timestamp: Number,
                 }

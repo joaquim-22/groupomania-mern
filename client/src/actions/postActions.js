@@ -12,31 +12,26 @@ export const ADD_COMMENT = "ADD_COMMENT";
 
 export const getPosts = () => {
   return async (dispatch) => {
-      return axios(`http://localhost:3050/api/post/`,{
-        method: "GET",
-      })
-      .then((res) => {
-        dispatch({ type: GET_POSTS, payload: res.data });
-      })
-      .catch((err) => console.log(err));
+    await axios(`http://localhost:3050/api/post/`,{
+      method: "GET",
+    })
+    .then((res) => {
+      dispatch({ type: GET_POSTS, payload: res.data });
+    })
+    .catch((err) => console.log(err));
   }
 };
 
 export const updatePost = (postId, formData) => {
   return async (dispatch) => {
-    return axios(`http://localhost:3050/api/post/${postId}`, {
+    await axios(`http://localhost:3050/api/post/${postId}`, {
       method: "PUT",
       data: formData,
       withCredentials: true
     })
     .then((res) => {
-      if (res.status === 200) {
-        dispatch({ type: UPDATE_POST, payload: { formData, postId }});
-        toast.success("Post updated");
-      }
-      else {
-        toast.error(res.response.data);
-      }
+      dispatch({ type: UPDATE_POST, payload: { formData, postId }});
+      toast.success("Post updated");
     })
     .catch((err) => toast.error(err.response.data))
   }
@@ -44,104 +39,85 @@ export const updatePost = (postId, formData) => {
 
 export const deletePost = (postId) => {
   return async (dispatch) => {
-    return axios(`http://localhost:3050/api/post/${postId}`, {
+    await axios(`http://localhost:3050/api/post/${postId}`, {
       method: "DELETE",
       withCredentials: true
     })
     .then((res) => {
-      if(res.status === 200) {
-        dispatch({ type: DELETE_POST, payload: { postId }})
-        toast.success("Post suprimmé");
-      }
-      else {
-        toast.error("Error");
-      }
+      dispatch({ type: DELETE_POST, payload: { postId }})
+      toast.success("Post suprimmé");
     })
     .catch((err) => toast.error("Error"))
-  }
-}
+  };
+};
 
 export const likePost = (postId, userId) => {
   return async (dispatch) => {
-    return axios(`http://localhost:3050/api/post/like-post/` + postId, {
+    await axios(`http://localhost:3050/api/post/like-post/` + postId, {
       method: "PATCH",
       withCredentials: true
     })
-      .then((res) => {
-        dispatch({ type: LIKE_POST, payload: { postId, userId } });
-      })
-      .catch((err) => console.log(err));
+    .then((res) => {
+      dispatch({ type: LIKE_POST, payload: { postId, userId } });
+    })
+    .catch((err) => console.log(err));
   };
 };
 
 export const unlikePost = (postId, userId) => {
   return async (dispatch) => {
-    return axios(`http://localhost:3050/api/post/unlike-post/` + postId, {
+    await axios(`http://localhost:3050/api/post/unlike-post/` + postId, {
       method: "PATCH",
       withCredentials: true
     })
-      .then((res) => {
-        dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
-      })
-      .catch((err) => console.log(err));
+    .then((res) => {
+      dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
+    })
+    .catch((err) => console.log(err));
   };
 };
 
 export const addComment = (postId, commentContent, userId) => {
   return async (dispatch) => {
-    return axios({
+    await axios(`http://localhost:3050/api/post/comment-post/${postId}`, {
       method: "PATCH",
-      url: `http://localhost:3050/api/post/comment-post/${postId}`,
       data: { commentContent },
       withCredentials: true
     })
-      .then((res) => {
-        if(res.status === 200) {
-          dispatch({ type: ADD_COMMENT, payload: { postId } });
-          toast.success("Commentaire ajouté");
-        }
-        else toast.error("Error")
-      })
-      .catch((err) => toast.error(err.response.data));
+    .then((res) => {
+      dispatch({ type: ADD_COMMENT, payload: { postId } });
+      toast.success("Commentaire ajouté");
+    })
+    .catch((err) => toast.error(err.response.data));
   };
 };
 
 export const updateComment = (postId, commentId, newCommentContent) => {
-  return (dispatch) => {
-    axios(`http://localhost:3050/api/post//update/comment/${postId}`, {
+  return async (dispatch) => {
+    await axios(`http://localhost:3050/api/post//update/comment/${postId}`, {
       method: "PATCH",
       data: { newCommentContent, commentId },
       withCredentials: true
     })
     .then((res) => {
-      if(res.status === 200) {
-        dispatch({ type: UPDATE_COMMENT, payload: { newCommentContent }})
-        toast.success("Commentaire updated");
-      }
-      else {
-        toast.error("Error");
-      }
+      dispatch({ type: UPDATE_COMMENT, payload: { newCommentContent }})
+      toast.success("Commentaire updated");
     })
     .catch((err) => toast.error("Error"))
-  }
-}
+  };
+};
 
 export const deleteComment = (postId, commentId) => {
   return async (dispatch) => {
-    return axios(`http://localhost:3050/api/post/delete/comment/${postId}`, {
+    await axios(`http://localhost:3050/api/post/delete/comment/${postId}`, {
       method: "PATCH",
       data: { commentId },
       withCredentials: true
     })
     .then((res) => {
-      if(res.status === 200) {
-        dispatch({ type: DELETE_COMMENT, payload: { postId, commentId }})
+        dispatch({ type: DELETE_COMMENT, payload: { postId, commentId }});
         toast.success("Commentaire supprimmé");
-      }
-      else {
-        toast.error("Error");
-      }
     })
     .catch((err) => toast.error("Error"))
-  }
+  };
 };

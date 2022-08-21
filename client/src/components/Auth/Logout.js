@@ -8,9 +8,9 @@ const Logout = () => {
 
     const removeCookie = (key) => {
         if(window !== 'undefined') {
-            cookie.remove(key, {expires: 1})
+            cookie.remove(key, {expires: 1});
         }
-    }
+    };
     
     const logout = async () => {
         await axios({
@@ -22,7 +22,7 @@ const Logout = () => {
         .catch((err) => console.log(err))
 
         window.location = '/'
-    }
+    };
 
     return(
         <IconButton onClick={logout}>

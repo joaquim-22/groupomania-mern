@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { TextField, Dialog, DialogActions, DialogContent, DialogTitle, Input, Button } from '@mui/material/';
+import { TextField, Dialog, DialogActions, DialogContent, DialogTitle, Input, Button, Box } from '@mui/material/';
 import { useDispatch } from 'react-redux';
 import { updatePost, getPosts } from "../../actions/postActions";
 import { ToastContainer} from 'react-toastify';
@@ -29,10 +29,8 @@ const UpdatePost = ({ post }) => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Update
-      </Button>
+    <Box>
+      <Button variant="outlined" size='large' fullWidth onClick={handleClickOpen}>Update</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update publication</DialogTitle>
         <DialogContent>
@@ -45,7 +43,7 @@ const UpdatePost = ({ post }) => {
         </DialogActions>
       </Dialog>
       <ToastContainer />
-    </div>
+    </Box>
   );
 }
 

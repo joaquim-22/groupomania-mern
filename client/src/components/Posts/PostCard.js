@@ -28,7 +28,7 @@ const PostCard = ({ post, user }) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: '80%',
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -42,55 +42,63 @@ const PostCard = ({ post, user }) => {
 
     const handleComment = async (e) => {
         e.preventDefault();
-            await dispatch(addComment(post._id, commentContent))
-            .then(() => {
-                dispatch(getPosts())
-                setCommentContent('')
-            })
-            .catch((err) => toast.error(err.response.data))
-    }
+        await dispatch(addComment(post._id, commentContent))
+        .then(() => {
+            dispatch(getPosts())
+            setCommentContent('')
+        })
+        .catch((err) => toast.error(err.response.data))
+    };
 
     const searchUser = (e, id) => {
         navigate(`/profile/${id}`);
-    }
+    };
 
     return (
         <ListItem >
             <Card sx={{ width: 1 }}>
-                <CardHeader
-                    avatar={users.length > 0 &&
-                            users.map((user) => {
-                                return (user.picture !== undefined && user._id === post.posterId) ?
-                                (<IconButton key={user._id} onClick={(e) => searchUser(e, user._id)}>
-                                    <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user"/>
-                                </IconButton>)
-                                : null
-                        })}
-                    action={
-                        <Grid container>
-                            {(user && user._id === post.posterId) ? 
-                                <UpdatePost post={post}/>
-                            : null}
-
-                            {(user && user._id === post.posterId ) ? 
-                                <IconButton onClick={deleteQuote}>
-                                    <ClearIcon sx={{ color: 'red' }}/>
-                                </IconButton>
-                            : null}
+                <Grid container justifyContent={'center'} pt={2}>
+                    <Grid item container xs={12} sm={5} justifyContent={{xs: 'center', sm:'flex-start'}}>
+                        <Grid item>
+                            {
+                                users.length > 0 && users.map((user) => {
+                                    return (user.picture !== undefined && user._id === post.posterId) ?
+                                        (<IconButton key={user._id} onClick={(e) => searchUser(e, user._id)}>
+                                            <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user"/>
+                                        </IconButton>)  : null
+                                })
+                            }
                         </Grid>
-                    }
-                    title={users.length > 0 &&
-                            users.map((user) => {
-                                if (user._id === post.posterId) return user.prenom + ' ' + user.nom
-                                else return null;
-                            })
-                            .join("")
-                        }
-                    subheader={convertDateForHuman(post.createdAt).slice(0, -3)}
-                />
-
-
-                {(post.picture !== undefined && post.picture !== null) &&
+                        <Grid item>
+                            {
+                                users.length > 0 && users.map((user) => {
+                                    if (user._id === post.posterId) return user.prenom + ' ' + user.nom
+                                    else return null;
+                                }).join("")
+                            }
+                            <Typography>{convertDateForHuman(post.createdAt).slice(0, -3)}</Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid item container xs={12} sm={6} justifyContent={{xs: 'center', sm:'flex-end'}}>
+                        <Grid item alignSelf='center'>
+                            {
+                                (user && user._id === post.posterId) ? 
+                                    <UpdatePost post={post}/>
+                                : null
+                            }
+                        </Grid>
+                        <Grid item>
+                            {
+                                (user && user._id === post.posterId ) ? 
+                                    <IconButton onClick={deleteQuote}>
+                                        <ClearIcon sx={{ color: 'red', fontSize: 45}}/>
+                                    </IconButton>
+                                : null
+                            }                                
+                        </Grid>
+                    </Grid>
+                </Grid>
+                {(post.picture !== undefined && post.picture != null && post.picture !== "") &&
                     <CardMedia height="200" component="img" src={"http://localhost:3050/Images/" + post.picture} alt="Post"/>
                 }
 
@@ -108,29 +116,18 @@ const PostCard = ({ post, user }) => {
                     <ModeCommentOutlinedIcon sx={{fontSize: 45}}></ModeCommentOutlinedIcon>
                     <Typography>{post.comments.length}</Typography>
                 </IconButton>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
+                <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                     <Box sx={style}>
                         <List>
                             {post.comments.length > 0 && post.comments.map((comment) => <CommentsCard key={comment._id} post={post} comment={comment}/>)}
                         </List>
-                        <TextField
-                            onChange={(e) => setCommentContent(e.target.value)}
-                            value={commentContent} name="commentContent"
-                            fullWidth variant="filled" label="Ajoutez un commentaire ..."/>
+                        <TextField onChange={(e) => setCommentContent(e.target.value)} value={commentContent} name="commentContent" fullWidth variant="filled" label="Ajoutez un commentaire ..."/>
                         <Button type="submit" style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handleComment}>Submit</Button>
                     </Box>
                 </Modal>
                     <Grid container>
-                        <TextField
-                            onChange={(e) => setCommentContent(e.target.value)}
-                            value={commentContent} name="commentContent"
-                            fullWidth variant="filled" label="Ajoutez un commentaire ..."/>
-                        <Button type="submit" style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handleComment}>Submit</Button> 
+                        <TextField onChange={(e) => setCommentContent(e.target.value)} value={commentContent} name="commentContent" fullWidth variant="filled" label="Ajoutez un commentaire ..."/>
+                        <Button type="submit" style={{backgroundColor: "#FF9292"}} fullWidth variant="contained" endIcon={<SendIcon />} onClick={handleComment}>Envoyer</Button> 
                     </Grid>
             </Card>
             <ToastContainer/>

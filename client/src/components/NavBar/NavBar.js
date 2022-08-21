@@ -37,10 +37,8 @@ const NavBar = () => {
   return (
     <>
       <Toolbar>
-        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
+        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+          <IconButton size="large" aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleOpenNavMenu}
@@ -77,15 +75,16 @@ const NavBar = () => {
               </MenuItem>
           </Menu>
         </Box>
-      <Box component="img"
-          src={logoGroupomania}
-          sx={{
-              height: 35,
-              width: 150,
-              maxHeight: { xs: 233, md: 167 },
-              maxWidth: { xs: 450, md: 250 },
-          }}
-      />
+        <Box component="img"
+            src={logoGroupomania}
+            sx={{
+                height: 35,
+                width: 180,
+                maxHeight: { xs: 233, md: 167 },
+                maxWidth: { xs: 450, md: 250 },
+            }}
+            align={"center"}
+        />
         <Grid container sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'space-around' }}>
           <Grid container justifyContent={'space-evenly'} alignItems={'center'}>
             <Link underline="none" href="/feed">Feed</Link>

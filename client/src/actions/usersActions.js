@@ -3,8 +3,8 @@ import axios from 'axios';
 export const GET_USERS = "GET_USERS";
 
 export const getUsers = () => {
-  return (dispatch) => {
-    return axios(`http://localhost:3050/api/user/`)
+  return async (dispatch) => {
+    await axios(`http://localhost:3050/api/user/`)
     .then((res) => {
       dispatch({ type: "GET_USERS", payload: res.data });
     })

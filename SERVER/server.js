@@ -1,17 +1,18 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
-const AdminBro = require('admin-bro');
-const AdminBroExpressjs = require('admin-bro-expressjs');
+const {checkUser, requireAuth, requireAdmin} = require('./middleware/auth.middleware');
 require('dotenv').config({path: './config/.env'});
 require('./config/db');
-const {checkUser, requireAuth} = require('./middleware/auth.middleware');
-const cors = require('cors');
+const AdminJS = require('adminjs');
+const AdminJSExpress = require('@adminjs/express')
 const PostModel = require('./models/post.model');
 const UserModel = require('./models/users.model');
 
-AdminBro.registerAdapter(require('admin-bro-mongoose'))
+const AdminJSMongoose = require('@adminjs/mongoose')
+AdminJS.registerAdapter(AdminJSMongoose)
 
 const app = express();
 
@@ -29,28 +30,27 @@ app.use(express.urlencoded({ extended: true} ));
 app.use('/Images', express.static('./Images'))
 app.use(cookieParser());
 
+// routes
+app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
+
 // jwt
 app.get('/*', checkUser);
 app.get('/jwtid', requireAuth, (req, res) => {
     res.json(res.locals.user._id)
 });
 
-// routes
-app.use('/api/user', userRoutes);
-app.use('/api/post', postRoutes);
-
-
 //AdminBro
-const adminBro = new AdminBro({
+const adminJs = new AdminJS({
     resources: [PostModel, UserModel],
-    roothPath: '/admin',
+    rootPath: '/admin',
     branding: {
         companyName: 'Groupomania',
     }
 });
 
-const router = AdminBroExpressjs.buildRouter(adminBro);
-app.use(adminBro.options.roothPath, router)
+const router = AdminJSExpress.buildRouter(adminJs)
+app.use(adminJs.options.rootPath, requireAdmin, router)
 
 //Server
 app.listen(3050, () => {
