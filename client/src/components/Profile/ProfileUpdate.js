@@ -1,6 +1,6 @@
-import { Avatar, Button, Grid, Input, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
+import { Avatar, Button, Grid, Input, TextField, Typography } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 const API_URL = process.env.REACT_APP_API_URL;
@@ -21,7 +21,7 @@ const ProfileUpdate = ({user}) => {
       data: { nom, prenom, department, bio, user },
       withCredentials: true
     })
-    .then((res) => toast.success("Profil updated"))
+    .then(() => toast.success("Profil updated"))
     .catch((err) => toast.error(err.response.data));
   };
 
@@ -78,7 +78,7 @@ const ProfileUpdate = ({user}) => {
         <Grid container rowSpacing={3} justifyContent='center'>
           <Grid item xs={12}>
             <Typography>Bio</Typography>
-            <TextField fullWidth placeholder={user.bio} onChange={(e) => setBio(e.target.value)}/>
+            <TextField fullWidth placeholder={user.bio} type="text" onChange={(e) => setBio(e.target.value)}/>
           </Grid>
           <Grid item xs={12}>
             <Typography>Nom</Typography>

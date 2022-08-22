@@ -36,7 +36,7 @@ const UserProfile = ({user}) => {
                             <Grid item xs={10} lg={4}>
                                 <Typography variant="h6">Date Naissance: {user.dateNaissance}</Typography>
                             </Grid>
-                            <Grid item xs={10} lg={2}>
+                            <Grid item xs={10} lg={4}>
                                 <Typography variant="h6">Départment: {user.department}</Typography>
                             </Grid>
                         </Grid>
