@@ -1,15 +1,15 @@
+require('dotenv').config({path: './config/.env'});
+require('./config/db');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
-const {checkUser, requireAuth, requireAdmin} = require('./middleware/auth.middleware');
-require('dotenv').config({path: './config/.env'});
-require('./config/db');
-const AdminJS = require('adminjs');
-const AdminJSExpress = require('@adminjs/express')
 const PostModel = require('./models/post.model');
 const UserModel = require('./models/users.model');
+const {checkUser, requireAuth, requireAdmin} = require('./middleware/auth.middleware');
+const AdminJS = require('adminjs');
+const AdminJSExpress = require('@adminjs/express')
 
 const AdminJSMongoose = require('@adminjs/mongoose')
 AdminJS.registerAdapter(AdminJSMongoose)
@@ -17,7 +17,7 @@ AdminJS.registerAdapter(AdminJSMongoose)
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
     credentials: true,
     'allowedHeaders': ['sessionId', 'Content-Type'],
     'exposedHeaders': ['sessionId'],
@@ -30,11 +30,11 @@ app.use(express.urlencoded({ extended: true} ));
 app.use('/Images', express.static('./Images'))
 app.use(cookieParser());
 
-// routes
+// Routes
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
 
-// jwt
+//Jwt
 app.get('/*', checkUser);
 app.get('/jwtid', requireAuth, (req, res) => {
     res.json(res.locals.user._id)
@@ -43,10 +43,14 @@ app.get('/jwtid', requireAuth, (req, res) => {
 //AdminBro
 const adminJs = new AdminJS({
     resources: [PostModel, UserModel],
-    rootPath: '/admin',
     branding: {
         companyName: 'Groupomania',
-    }
+        logo: false
+    },
+    dashboard: {
+        component: AdminJS.bundle('./Dashboard.jsx')
+      },
+    rootPath: '/admin'
 });
 
 const router = AdminJSExpress.buildRouter(adminJs)

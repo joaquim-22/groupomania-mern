@@ -18,7 +18,7 @@ const MenuHome = ( props ) => {
   };
 
   return (
-      <Grid container rowSpacing={2} my={2}>
+      <Grid container rowSpacing={2} mb={2}>
         <Grid item xs={12}>
           <Button fullWidth size="large" onClick={handleModals} variant='contained' id="register" className={registerModal ? "active-btn" : null}>S'inscrire</Button>
         </Grid>

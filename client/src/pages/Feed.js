@@ -22,23 +22,23 @@ const Feed = () => {
     },[dispatch])
 
 
-    const handlePost = () => {
+    const handlePost = async () => {
         const formData = new FormData();
         formData.append("file", image);
         formData.append("content", content);
         formData.append("posterId", user._id);
         
-        axios.post(`http://localhost:3050/api/post/`, formData, {
+        await axios.post(`http://localhost:3050/api/post/`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             },
             withCredentials: true
         })
-        .then((res) => {
-            dispatch(getPosts());
-            setContent('');
+        .then(() => {
             toast.success('Post ajouté');
+            setContent('');
         })
+        .then(() => dispatch(getPosts()))
         .catch((err) => toast.error(err.response.data))
     }
 

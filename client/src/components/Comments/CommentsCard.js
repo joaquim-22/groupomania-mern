@@ -25,7 +25,7 @@ const CommentsCard = ({ comment, post }) => {
     }
 
     return (
-        <Card style={{'margin-bottom': '10px'}}>
+        <Card style={{marginBottom: '10px'}}>
             <Grid container justifyContent={'center'} pt={2}>
                 <Grid item container xs={12} sm={5} justifyContent={{xs: 'center', sm:'flex-start'}}>
                     <Grid item>
@@ -68,7 +68,7 @@ const CommentsCard = ({ comment, post }) => {
                 </Grid>
             </Grid>
             <CardContent>
-                <Typography>{comment.text}</Typography>
+                <Typography fontSize={20}>{comment.text}</Typography>
             </CardContent>
         </Card>
     )

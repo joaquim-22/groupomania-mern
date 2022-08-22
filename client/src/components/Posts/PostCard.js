@@ -5,7 +5,7 @@ import CommentsCard from '../Comments/CommentsCard';
 import LikeButton from './LikeButton';
 import UpdatePost from './UpdatePost'
 import { addComment, deletePost, getPosts } from "../../actions/postActions";
-import { Box, TextField, CardContent, Grid, List, Modal, Button, Card, CardHeader, CardMedia, Avatar, IconButton, Typography, ListItem } from '@mui/material';
+import { Box, TextField, CardContent, Grid, List, Modal, Button, Card, CardMedia, Avatar, IconButton, Typography, ListItem } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import SendIcon from '@mui/icons-material/Send';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
@@ -101,20 +101,17 @@ const PostCard = ({ post, user }) => {
                 {(post.picture !== undefined && post.picture != null && post.picture !== "") &&
                     <CardMedia height="200" component="img" src={"http://localhost:3050/Images/" + post.picture} alt="Post"/>
                 }
-
                 {post.message !== "" ?
                     (<CardContent>
-                        <Typography>{post.message}</Typography>
+                        <Typography fontSize={20}>{post.message}</Typography>
                     </CardContent>) : null
                 }
-
-                <Button>
+                <IconButton>
                     <LikeButton post={post} user={user} users={users}/>
-                </Button>
-
+                </IconButton>
                 <IconButton onClick={handleOpen}>
                     <ModeCommentOutlinedIcon sx={{fontSize: 45}}></ModeCommentOutlinedIcon>
-                    <Typography>{post.comments.length}</Typography>
+                    <Typography pl={2} fontSize={30}>{post.comments.length}</Typography>
                 </IconButton>
                 <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                     <Box sx={style}>

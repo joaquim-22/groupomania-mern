@@ -4,7 +4,7 @@ import { likePost, unlikePost } from "../../actions/postActions";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Avatar, Grid, List, ListItem } from "@mui/material";
+import { Avatar, Grid, IconButton, List, ListItem } from "@mui/material";
 import { UidContext } from "../AppContext";
 
 const style = {
@@ -47,14 +47,18 @@ const LikeButton = ({ post }) => {
     return (
         <>
             <Grid container alignItems={'center'}>
-                {liked && (
-                    <img src="../../icons/heart-filled.svg" onClick={submitDislike} alt="like" />
-                )}
-    
-                {liked === false &&  (
-                    <img src="../../icons/heart.svg" onClick={submitLike} alt="like" />
-                )}
-                <Typography onClick={handleOpen} >{post.likers.length}</Typography>
+                <Grid item xs={6}>
+                    {liked && (
+                        <img src="../../icons/heart-filled.svg" onClick={submitDislike} alt="like" />
+                    )}
+        
+                    {liked === false &&  (
+                        <img src="../../icons/heart.svg" onClick={submitLike} alt="like" />
+                    )}
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography pl={2} fontSize={30} onClick={handleOpen}>{post.likers.length}</Typography>
+                </Grid>
                 <Modal
                     open={open}
                     onClose={handleClose}

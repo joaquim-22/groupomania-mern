@@ -93,10 +93,10 @@ module.exports.likePost = async (req, res) => {
                 },
                 { new: true })
                 .then((data) => res.json(data))
-                .catch((err) => res.status(500).json({ message: err }));
+                .catch((err) => res.status(500).json(err));
         }
     })
-    .catch((err) => res.status(500).json({ message: err }));
+    .catch((err) => res.status(500).json(err));
 }
 
 module.exports.unlikePost = async (req, res) => {
@@ -170,12 +170,12 @@ module.exports.editCommentPost = (req, res) => {
         return PostModel.findById(
            req.params.id,
             (err, docs) => {
-                const theComment = docs.comments.find((comment) => 
+                const comment = docs.comments.find((comment) => 
                  comment._id.equals(req.body.commentId)
                 );
 
-                if (!theComment) return res.status(404).send('Comment not found')
-                theComment.text = req.body.newCommentContent;
+                if (!comment || userId != comment.commenterId) return res.status(404).send('Comment not found')
+                comment.text = req.body.newCommentContent;
 
                 return docs.save((err) => {
                  if (!err) return res.status(200).json(docs);

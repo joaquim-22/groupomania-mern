@@ -11,8 +11,8 @@ export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 
 export const getPosts = () => {
-  return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post/`,{
+  return (dispatch) => {
+    axios(`http://localhost:3050/api/post/`,{
       method: "GET",
     })
     .then((res) => {
