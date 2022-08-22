@@ -101,7 +101,7 @@ const PostCard = ({ post, user }) => {
                     </Grid>
                 </Grid>
                 {(post.picture !== undefined && post.picture != null && post.picture !== "") &&
-                    <CardMedia height="200" component="img" src={"http://localhost:3050/Images/" + post.picture} alt="Post"/>
+                    <CardMedia sx={{maxHeight: '400px', objectFit: "contain", width: '90%', margin: 'auto'}} component="img" src={"http://localhost:3050/Images/" + post.picture} alt="Post"/>
                 }
                 {post.message !== "" ?
                     (<CardContent>

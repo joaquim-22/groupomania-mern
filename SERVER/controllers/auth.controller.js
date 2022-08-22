@@ -22,38 +22,38 @@ module.exports.signUp = async (req, res, next) => {
     !req.body.password ||
     !req.body.department
   ) {
-    return res.status(400).json("Champs Invalides")
+    return res.status(400).json("Champs vides")
   }
 
   if(!EMAIL_REGEX.test(email)) {
-    return res.status(400).json("Email n'est pas valide")
+    return res.status(400).json("L'email n'est pas valide")
   }
 
   if(!PASSWORD_REGEX.test(password)) {
-      return res.status(400).json("Password doit contenir 6 caractères minimum et un chiffre")
+      return res.status(400).json("Password doit contenir au minimum 6 caractères et 1 chiffre")
   }
 
   if(!DATE_REGEX.test(dateNaissance)) {
-      return res.status(400).json("Date n'est pas valide")
+      return res.status(400).json("La date n'est pas valide")
   }
 
   await UserModel.findOne({email: email})
   .then((user) => {
     if(user) {
-      res.status(400).json('Email a été dejà pris');
+      res.status(400).json('Cet email est dejà pris');
     }
     else {
       UserModel.create({email, password, nom, prenom, dateNaissance, department});
-      res.status(200).json('Utilisateur a été bien crée');
+      res.status(200).json('Le compte a été crée avec succès');
     }
   })
-  .catch((err) => res.status(400).json('Error pendant la création'));
+  .catch((err) => res.status(400).json('Error durant la création de compte'));
 }
 
 module.exports.signIn = async (req, res) => {
   const { email, password } = req.body;
   
-  if (email === null ||  password === null) {
+  if (email === "" || password === "") {
     return res.status(400).json('Paramètres manquants');
   };
 
@@ -69,5 +69,5 @@ module.exports.signIn = async (req, res) => {
 
 module.exports.logout = (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });
-  res.json({'success': 'Logout'})
+  res.json('Déconnexion')
 }

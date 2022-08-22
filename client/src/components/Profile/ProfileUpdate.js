@@ -32,11 +32,13 @@ const ProfileUpdate = ({user}) => {
     })
     .then((res) => {
       toast.success('User supprimmé');
+    })
+    .then(() => {
       setTimeout(() => {
         window.location.replace('/');
       }, 5000);
     })
-    .catch((err) => toast.error(err.response.data));
+    .catch((err) => console.log(err));
   };
 
   const handleSubmit = (e) => {
@@ -48,7 +50,7 @@ const ProfileUpdate = ({user}) => {
       withCredentials: true
     })
     .then((res) => toast.success('User photo updated'))
-    .cathc((err) => toast.error('Error'))
+    .catch((err) => toast.error('Error'))
   }
 
   const handleFileChange = (e) => {

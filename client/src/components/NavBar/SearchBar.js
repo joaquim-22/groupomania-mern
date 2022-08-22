@@ -22,12 +22,7 @@ const SearchBar = () => {
     return (
         <>
             <Box>
-                <Input
-                    type="text"
-                    className="search"
-                    placeholder="Search..."
-                    onChange={handleSearch}
-                />
+                <Input type="text" className="search" placeholder="Rechercher..." onChange={handleSearch}/>
             </Box>
             <List>
                 {

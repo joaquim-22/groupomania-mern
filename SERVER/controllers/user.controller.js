@@ -47,15 +47,19 @@ module.exports.updateUser = async (req, res) => {
 }
 
 module.exports.deleteUser = async (req, res) => {
-    if (!ObjectID.isValid(req.params.id))
-    return res.status(400).send('ID unknown : ' + req.params.id) 
+  const token = req.cookies.jwt;
+  const userId = getUserId(token);
 
-    try {
-        await UserModel.remove({ _id: req.params.id }).exec();
+  if (!ObjectID.isValid(req.params.id))
+  return res.status(400).send('ID unknown : ' + req.params.id) 
+
+  await UserModel.findOne({ _id: req.params.id })
+    .then((user) => {
+      if(userId == user._id) {
+        user.removeOne({ _id: req.params.id })
         res.cookie('jwt', '', { maxAge: 1 });
-        res.status(200).json({ message: "Succefully deleted. "});
-    } 
-    catch (err) {
-      return res.status(500).json({ message: err});
-    }
+        res.status(200).json('Compte supprimé avec success');
+      }
+    })
+    .catch((err) => res.status(400).json('Error durant la suppression'));
 }

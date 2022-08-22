@@ -11,8 +11,6 @@
   "dependencies": {
     "@adminjs/express": "^5.0.0",
     "@adminjs/mongoose": "^3.0.0",
-    "admin-bro-expressjs": "^2.1.1",
-    "admin-bro-mongoose": "^0.5.2",
     "adminjs": "^6.1.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",

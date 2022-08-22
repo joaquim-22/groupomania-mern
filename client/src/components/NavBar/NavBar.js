@@ -1,15 +1,8 @@
 import React, {useState} from 'react';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import logoGroupomania from '../../assets/logo.svg'
 import Logout from '../Auth/Logout';
-import { Grid, Link } from '@mui/material';
+import { Grid, Link, MenuItem, Menu, IconButton, Toolbar, Box, Avatar } from '@mui/material';
 import SearchBar from './SearchBar';
 import { useSelector } from 'react-redux';
 
@@ -17,7 +10,6 @@ const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const user = useSelector((state) => state.userReducer);
-  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
