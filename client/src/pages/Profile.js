@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar/NavBar';
 import ProfileUpdate from '../components/Profile/ProfileUpdate';
 import UserProfile from '../components/Profile/UserProfile';
-import { CssBaseline, Container, Box, Button, Grid } from '@mui/material';
+import { CssBaseline, Container, Button, Grid } from '@mui/material';
 
 const Profile = ({ user }) => {
     const [update, setUpdate] = useState(false);
