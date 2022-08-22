@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/users.model');
-const JWT_SIGN_SECRET = '<JWT_SIGN_TOKEN>';
 
 module.exports.checkUser = (req, res, next) => {
     const token = req.cookies.jwt;
     if (token) {
-        jwt.verify(token, JWT_SIGN_SECRET, async (err, decodedToken) => {
+        jwt.verify(token, process.env.JWT_KEY, async (err, decodedToken) => {
             if (err) {
                 res.locals.user = null;
                 next();
@@ -24,7 +23,7 @@ module.exports.checkUser = (req, res, next) => {
 module.exports.requireAuth = (req, res, next) => {
     const token = req.cookies.jwt;
     if (token) {
-      jwt.verify(token, JWT_SIGN_SECRET, async (err, decodedToken) => {
+      jwt.verify(token, process.env.JWT_KEY, async (err, decodedToken) => {
         if (err) {
           res.status(400).json('No token')
         } else {
@@ -41,7 +40,7 @@ module.exports.getUserId = (token) => {
 
   if (token !== null) {
       try {
-          let jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
+          let jwtToken = jwt.verify(token, process.env.JWT_KEY);
 
           if (jwtToken != null) {
               userId = jwtToken.id;
@@ -57,7 +56,7 @@ module.exports.getUserId = (token) => {
 module.exports.requireAdmin = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, JWT_SIGN_SECRET, async (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_KEY, async (err, decodedToken) => {
       if (!err && decodedToken.isAdmin === true) {
         next()
       } else {        

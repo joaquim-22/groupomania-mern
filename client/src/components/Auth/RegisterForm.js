@@ -26,8 +26,8 @@ const RegisterForm = () => {
         password
       }
     })
-      .then((res) => toast.success("Utilisateur a été bien crée"))
-      .catch((err) => toast.error(err.response.data))
+    .then((res) => toast.success("Utilisateur a été bien crée"))
+    .catch((err) => toast.error(err.response.data))
   };
 
   return (

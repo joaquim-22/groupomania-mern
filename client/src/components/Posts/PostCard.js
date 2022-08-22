@@ -25,6 +25,7 @@ const PostCard = ({ post, user }) => {
 
     const style = {
         position: 'absolute',
+        height: '80%',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
@@ -32,6 +33,7 @@ const PostCard = ({ post, user }) => {
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
+        overflow: 'scroll',
         p: 4,
     };
 

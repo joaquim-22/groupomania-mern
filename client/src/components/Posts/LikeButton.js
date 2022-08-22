@@ -4,18 +4,20 @@ import { likePost, unlikePost } from "../../actions/postActions";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Avatar, Grid, IconButton, List, ListItem } from "@mui/material";
+import { Avatar, Grid, List, ListItem } from "@mui/material";
 import { UidContext } from "../AppContext";
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
+    maxHeight: '80%',
     transform: 'translate(-50%, -50%)',
     width: '50%',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
+    overflow: 'scroll',
     p: 4,
   };
 

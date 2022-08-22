@@ -93,12 +93,12 @@ const NavBar = () => {
           </Grid>
         </Grid>
 
-        <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Open settings">
+        <Box sx={{ flexGrow: 1 }}>
+          <Box title="Open settings" sx={{display: 'flex', justifyContent: 'flex-end'}}>
             <IconButton onClick={handleOpenUserMenu}>
               {user.picture !== undefined && <Avatar src={"http://localhost:3050/Images/" + user.picture} alt="user" key={user._id}/>}
             </IconButton>
-          </Tooltip>
+          </Box>
           <Menu
             sx={{ mt: '45px' }}
             id="menu-appbar"

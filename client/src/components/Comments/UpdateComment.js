@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { getPosts, updateComment } from "../../actions/postActions";
+import { Box } from '@mui/material';
 
 const UpdateComment = ({comment, post}) => {
   const dispatch = useDispatch();
@@ -31,25 +32,19 @@ const UpdateComment = ({comment, post}) => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>Update</Button>
+    <Box>
+      <Button variant="outlined" fullWidth size='large' onClick={handleClickOpen}>Update</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update Commentaire</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            onChange={(e) => setNewCommentContent(e.target.value)}
-            name="newCommentContent"
-            type="text"
-            value={newCommentContent}
-          />
+          <TextField autoFocus onChange={(e) => setNewCommentContent(e.target.value)} name="newCommentContent" type="text" value={newCommentContent}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={updateComments}>Update</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 }
 

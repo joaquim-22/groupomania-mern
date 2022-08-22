@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
-import { Box, Button, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 const MenuHome = ( props ) => {
   const [registerModal, setRegisterModal] = useState(props.register);
@@ -11,6 +11,7 @@ const MenuHome = ( props ) => {
     if (e.target.id === "register") {
       setLoginModal(false);
       setRegisterModal(true);
+
     } else if (e.target.id === "login") {
       setRegisterModal(false);
       setLoginModal(true);
