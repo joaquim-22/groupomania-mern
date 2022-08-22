@@ -18,7 +18,7 @@ export const getPosts = () => {
     .then((res) => {
       dispatch({ type: GET_POSTS, payload: res.data });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => toast.error("Erreur durant la récuperation des posts"));
   }
 };
 

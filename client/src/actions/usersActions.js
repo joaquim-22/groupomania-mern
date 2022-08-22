@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const GET_USERS = "GET_USERS";
 
@@ -8,6 +9,6 @@ export const getUsers = () => {
     .then((res) => {
       dispatch({ type: "GET_USERS", payload: res.data });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => toast.error('Impossible de afficher les users'));
   };
 };
