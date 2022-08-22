@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar/NavBar';
-import { CssBaseline, Container, Box, CardContent, CardHeader, Card, Typography, Avatar, List, Grid } from '@mui/material';
+import { CssBaseline, Container, CardContent, Card, Typography, Avatar, List, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../../actions/postActions';
 import PostCard from '../Posts/PostCard';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const ProfileUsers = () => {
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const ProfileUsers = () => {
     const params = useParams();
     
     useEffect(() => {
-        axios.get(`http://localhost:3050/api/user/${params.id}`)
+        axios.get(`${API_URL}/user/${params.id}`)
             .then((res) => {
             setUserGet(res.data)
             })
@@ -38,9 +39,7 @@ const ProfileUsers = () => {
             <Card sx={{ width: 1 }}>
                 <Grid container justifyContent={'center'}>
                     <Grid item my={2}>
-                        {
-                            (userGet.picture !== undefined) && <Avatar src={"http://localhost:3050/Images/" + userGet.picture} alt="user" key={userGet._id} sx={{ width: 100, height: 100 }}/>
-                        }
+                        {(userGet.picture !== undefined && userGet.picture !== null) && <Avatar src={"http://localhost:3050/Images/" + userGet.picture} alt="user" key={userGet._id} sx={{ width: 100, height: 100 }}/>}
                     </Grid>
                     <Grid item xs={12} align='center'>
                         <Typography variant="h5" align='center'>{userGet.prenom + ' ' + userGet.nom}</Typography>
@@ -66,8 +65,7 @@ const ProfileUsers = () => {
                 </CardContent>
             </Card>
             <List>
-                {
-                posts.length > 0 && posts.map((post) => {
+                {posts.length > 0 && posts.map((post) => {
                     if(userGet._id === post.posterId) return <PostCard post={post} user={user} key={post._id} />
                     else return null
                 })}

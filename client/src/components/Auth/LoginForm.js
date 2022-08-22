@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import axios from "axios";
 import { Button, Grid, TextField, Typography,} from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ const LoginForm = () => {
     e.preventDefault()
     axios({
       method: "POST",
-      url: `http://localhost:3050/api/user/login`,
+      url: `${API_URL}/user/login`,
       withCredentials: true,
       data: { email, password },
     })

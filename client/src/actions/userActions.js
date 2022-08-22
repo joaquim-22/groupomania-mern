@@ -1,12 +1,12 @@
 import axios from 'axios';
-
 export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const getUser = (uid) => {
   return (dispatch) => {
-    axios.get(`http://localhost:3050/api/user/${uid}`, {
+    axios.get(`${API_URL}/user/${uid}`, {
       Accept: "application/json"
     })
     .then((res) => {

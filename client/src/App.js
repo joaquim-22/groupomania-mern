@@ -24,10 +24,10 @@ const App = () => {
       })
       .catch(() => navigate('/'));
     }
-    fetchTok();
+      fetchTok();
 
-    if(uid) dispatch(getUser(uid));
-  }, [uid, dispatch, navigate]);
+      if(uid) dispatch(getUser(uid));
+    }, [uid, dispatch, navigate]);
 
   return (
     <UidContext.Provider value={uid}>

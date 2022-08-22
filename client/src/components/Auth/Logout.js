@@ -3,6 +3,7 @@ import axios from 'axios';
 import cookie from 'js-cookie';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { IconButton, Typography } from '@mui/material';
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 const Logout = () => {
 
@@ -15,7 +16,7 @@ const Logout = () => {
     const logout = async () => {
         await axios({
             method: "GET",
-            url: 'http://localhost:3050/api/user/logout',
+            url: `${API_URL}/user/logout`,
             withCredentials:true
         })
         .then(() => removeCookie('jwt'))

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
+const PostModel = require('./post.model');
 
 const userSchema = new mongoose.Schema(
   {
@@ -62,11 +63,16 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// play function before save into display: 'block',
+// play function before save,
 userSchema.pre("save", async function(next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
+});
+
+userSchema.pre('deleteOne', { document: false, query: true }, async function() {
+  const doc = await this.model.findOne(this.getFilter());
+  await PostModel.deleteMany({ posterId: doc._id });
 });
 
 userSchema.statics.login = async function(email, password) {

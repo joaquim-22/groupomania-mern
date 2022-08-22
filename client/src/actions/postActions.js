@@ -10,9 +10,11 @@ export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export const getPosts = () => {
   return (dispatch) => {
-    axios(`http://localhost:3050/api/post/`,{
+    axios(`${API_URL}/post/`,{
       method: "GET",
     })
     .then((res) => {
@@ -24,7 +26,7 @@ export const getPosts = () => {
 
 export const updatePost = (postId, formData) => {
   return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post/${postId}`, {
+    await axios(`${API_URL}/post/${postId}`, {
       method: "PUT",
       data: formData,
       withCredentials: true
@@ -39,7 +41,7 @@ export const updatePost = (postId, formData) => {
 
 export const deletePost = (postId) => {
   return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post/${postId}`, {
+    await axios(`${API_URL}/post/${postId}`, {
       method: "DELETE",
       withCredentials: true
     })
@@ -53,7 +55,7 @@ export const deletePost = (postId) => {
 
 export const likePost = (postId, userId) => {
   return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post/like-post/` + postId, {
+    await axios(`${API_URL}/post/like-post/` + postId, {
       method: "PATCH",
       withCredentials: true
     })
@@ -66,7 +68,7 @@ export const likePost = (postId, userId) => {
 
 export const unlikePost = (postId, userId) => {
   return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post/unlike-post/` + postId, {
+    await axios(`${API_URL}/post/unlike-post/` + postId, {
       method: "PATCH",
       withCredentials: true
     })
@@ -79,7 +81,7 @@ export const unlikePost = (postId, userId) => {
 
 export const addComment = (postId, commentContent, userId) => {
   return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post/comment-post/${postId}`, {
+    await axios(`${API_URL}/post/comment-post/${postId}`, {
       method: "PATCH",
       data: { commentContent },
       withCredentials: true
@@ -94,7 +96,7 @@ export const addComment = (postId, commentContent, userId) => {
 
 export const updateComment = (postId, commentId, newCommentContent) => {
   return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post//update/comment/${postId}`, {
+    await axios(`${API_URL}/post//update/comment/${postId}`, {
       method: "PATCH",
       data: { newCommentContent, commentId },
       withCredentials: true
@@ -109,7 +111,7 @@ export const updateComment = (postId, commentId, newCommentContent) => {
 
 export const deleteComment = (postId, commentId) => {
   return async (dispatch) => {
-    await axios(`http://localhost:3050/api/post/delete/comment/${postId}`, {
+    await axios(`${API_URL}/post/delete/comment/${postId}`, {
       method: "PATCH",
       data: { commentId },
       withCredentials: true

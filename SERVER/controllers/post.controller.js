@@ -72,7 +72,7 @@ module.exports.deletePost = (req, res) => {
     PostModel.findOne({_id: req.params.id})
     .then((post) => {
         if(post.posterId == userId) {
-            PostModel.removeOne({_id: post._id})
+            PostModel.deleteOne({_id: post._id})
             .then(() => res.status(200).json('Post supprimé avec success'))
             .catch((err) => res.status('Erreur durant la supression'))
         }

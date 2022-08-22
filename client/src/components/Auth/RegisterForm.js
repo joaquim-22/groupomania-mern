@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const RegisterForm = () => {
 
@@ -16,7 +17,7 @@ const RegisterForm = () => {
     e.preventDefault();
     await axios({
       method: "post",
-      url: `http://localhost:3050/api/user/register`,
+      url: `${API_URL}/user/register`,
       data: {
         nom,
         prenom,

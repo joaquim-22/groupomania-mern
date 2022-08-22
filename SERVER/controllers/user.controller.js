@@ -4,8 +4,13 @@ const ObjectID = mongoose.Types.ObjectId;
 const { getUserId } = require('../middleware/auth.middleware');
 
 module.exports.getAllUsers = async (req, res) => {
-  const users = await UserModel.find().select('-password');
-  res.status(200).json(users);
+  try{
+    const users = await UserModel.find().select('-password');
+    res.status(200).json(users);
+  }
+  catch (err) {
+    return res.status(400).json('Impossible de récupérer les utilisateurs');
+  }
 }
 
 module.exports.userInfo = (req, res) => {
@@ -56,10 +61,13 @@ module.exports.deleteUser = async (req, res) => {
   await UserModel.findOne({ _id: req.params.id })
     .then((user) => {
       if(userId == user._id) {
-        user.removeOne({ _id: req.params.id })
-        res.cookie('jwt', '', { maxAge: 1 });
-        res.status(200).json('Compte supprimé avec success');
+        UserModel.deleteOne({ _id: req.params.id })
+        .then(() => {
+          res.cookie('jwt', '', { maxAge: 1 });
+          res.status(200).json('Compte supprimé avec success');
+        })
+        .catch((err) => console.log(err))
       }
     })
-    .catch((err) => res.status(400).json('Error durant la suppression'));
+    .catch((err) => console.log(err));
 }

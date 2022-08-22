@@ -7,6 +7,7 @@ import NavBar from '../components/NavBar/NavBar';
 import PostCard from '../components/Posts/PostCard';
 import SendIcon from '@mui/icons-material/Send';
 import { Avatar, Button, Card, Container, CssBaseline, Grid, Input, List, TextField, Typography } from '@mui/material';
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 const Feed = () => {
@@ -24,12 +25,12 @@ const Feed = () => {
 
     const handlePost = async () => {
         const formData = new FormData();
-        
+
         formData.append("file", image);
         formData.append("content", content);
         formData.append("posterId", user._id);
         
-        await axios.post(`http://localhost:3050/api/post/`, formData, {
+        await axios.post(`${API_URL}/post/`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             },
@@ -66,10 +67,8 @@ const Feed = () => {
                 </Card>
                 <Typography variant="h4" align='center' my={3}>Dernières Publications</Typography>
                 <List>
-                    {
-                    posts.length > 0 && posts.map((post) => {
-                        return <PostCard key={post._id} post={post} user={user}/>;
-                    })}
+                    {posts.length > 0 && posts.map((post) => {
+                        return <PostCard key={post._id} post={post} user={user}/>;})}
                 </List>
                 <ToastContainer/>
             </Container>

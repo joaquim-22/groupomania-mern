@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteComment } from "../../actions/postActions";
 import UpdateComment from '../Comments/UpdateComment';
-import { Avatar, CardContent, CardHeader, Grid, Typography, Card } from '@mui/material';
+import { Avatar, CardContent, Grid, Typography, Card } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
