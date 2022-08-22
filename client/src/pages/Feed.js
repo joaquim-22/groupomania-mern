@@ -24,6 +24,7 @@ const Feed = () => {
 
     const handlePost = async () => {
         const formData = new FormData();
+        
         formData.append("file", image);
         formData.append("content", content);
         formData.append("posterId", user._id);

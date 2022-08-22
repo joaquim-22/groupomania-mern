@@ -11,7 +11,7 @@ export default function postReducer(state = initialState, action) {
         case UPDATE_POST:
             return state.map((post) => {
                 if (post._id === action.payload.postId) {
-                  const {newContent} = action.payload.formData;
+                  const { newContent } = action.payload.formData;
                     return {
                             ...post,
                             message: newContent,
